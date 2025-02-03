@@ -49,8 +49,8 @@ public class UpdatedStarterBot2 extends OpMode {
     public final double WRIST_FOLDED_IN   = .6511;
     public final double WRIST_FOLDED_OUT  = .3228;
 
-    public final double ARM_ROTATION_COLLECT = .7433;
-    public final double ARM_ROTATION_DEPOSIT = .0922;
+    final double ARM_ROTATION_COLLECT = 0.86;
+    final double ARM_ROTATION_DEPOSIT = .18;
 
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 

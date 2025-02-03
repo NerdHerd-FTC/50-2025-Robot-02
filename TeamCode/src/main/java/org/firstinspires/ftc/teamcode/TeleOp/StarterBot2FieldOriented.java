@@ -38,8 +38,8 @@ public class StarterBot2FieldOriented extends LinearOpMode {
     final double WRIST_FOLDED_IN   = 0.5556;
     final double WRIST_FOLDED_OUT  = 0.2261;
 
-    final double ARM_ROTATION_COLLECT = .7383;
-    final double ARM_ROTATION_DEPOSIT = .0872;
+    final double ARM_ROTATION_COLLECT = 0.86;
+    final double ARM_ROTATION_DEPOSIT = .18;
 
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
