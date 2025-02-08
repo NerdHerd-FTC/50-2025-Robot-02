@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,29 +21,29 @@ public class StarterBot2FieldOriented extends LinearOpMode {
     Servo wrist = null;
     Servo armServo = null;
 
-    final double ARM_TICKS_PER_DEGREE = 19.7924893140647;
+    final double ARM_TICKS_PER_DEGREE     = 19.7924893140647;
 
     final double ARM_COLLAPSED_INTO_ROBOT = 0;
-    final double ARM_COLLECT              = 2 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER        = 240 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN       = 160 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW  = 160 * ARM_TICKS_PER_DEGREE;
-    final double ARM_ATTACH_HANGING_HOOK  = 120 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT          = 15  * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT              = (2   * ARM_TICKS_PER_DEGREE);
+    final double ARM_CLEAR_BARRIER        = (240 * ARM_TICKS_PER_DEGREE);
+    final double ARM_SCORE_SPECIMEN       = (160 * ARM_TICKS_PER_DEGREE);
+    final double ARM_SCORE_SAMPLE_IN_LOW  = (160 * ARM_TICKS_PER_DEGREE);
+    final double ARM_ATTACH_HANGING_HOOK  = (120 * ARM_TICKS_PER_DEGREE);
+    final double ARM_WINCH_ROBOT          = (15  * ARM_TICKS_PER_DEGREE);
 
-    final double INTAKE_COLLECT  = -1.0;
+    final double INTAKE_COLLECT  = -0.5;
     final double INTAKE_OFF      = 0.0;
     final double INTAKE_DEPOSIT  = 0.5;
 
-    final double WRIST_FOLDED_IN   = .5556;
-    final double WRIST_FOLDED_OUT  = .2261;
+    final double WRIST_FOLDED_IN   = 0.5556;
+    final double WRIST_FOLDED_OUT  = 0.2261;
 
-    final double ARM_ROTATION_COLLECT = .6994;
-    final double ARM_ROTATION_DEPOSIT = .0294;
+    final double ARM_ROTATION_COLLECT = .7383;
+    final double ARM_ROTATION_DEPOSIT = .0872;
 
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
-    double armPosition = 0.0;
+    double armPosition = (int) ARM_WINCH_ROBOT;
     double armPositionFudgeFactor;
 
     @Override
@@ -125,16 +126,16 @@ public class StarterBot2FieldOriented extends LinearOpMode {
                 armPosition = ARM_COLLECT;
                 armMotor.setPower(0.5);
                 armMotor.setTargetPosition((int) armPosition);
-                armServo.setPosition(ARM_ROTATION_COLLECT);
-                wrist.setPosition(WRIST_FOLDED_OUT);
+//                armServo.setPosition(armServo.getPosition() + 1.0/300);
+//                wrist.setPosition(WRIST_FOLDED_OUT);
             }
 
             else if (gamepad1.left_bumper){
                 armPosition = ARM_CLEAR_BARRIER;
                 armMotor.setPower(0.5);
                 armMotor.setTargetPosition((int) armPosition);
-                wrist.setPosition(WRIST_FOLDED_OUT);
-                armServo.setPosition(ARM_ROTATION_DEPOSIT);
+//                wrist.setPosition(WRIST_FOLDED_OUT);
+//                armServo.setPosition(armServo.getPosition() - 1.0/300);
             }
 
             else if (gamepad1.y){
