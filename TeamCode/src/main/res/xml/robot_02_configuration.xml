@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?> <!--This is the xml declaration and can be copy-pasted-->
+<!--Author: Kavi Gupta - 50 NerdHerd Critical Point. Inspired by: Havish Sripada - 12808 RevAmped Robotics-->
+
+<!--This declares the robot class, and can be copy-pasted.-->
+<Robot type="FirstInspires-FTC">
+
+    <!--This line declares the Control Hub Portal which contains both hubs. It can be copy-pasted-->
+    <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <!--This line declares the Expansion Hub. We use RS485 connection, so we declare it with a port.-->
+        <LynxModule name="Expansion Hub 2" port="2">
+            <!--These are the Expansion Hub's motors. Change the ports and names of your motors.-->
+            <goBILDA5202SeriesMotor name="arm" port="0" />
+            <!--This line signifies that the Expansion Hub configuration has ended.-->
+        </LynxModule>
+
+        <!--This line declares the Control Hub and can be copy-pasted.-->
+        <LynxModule name="Control Hub" port="173">
+            <!--These are the Control Hub's motors. Change the ports and names of your motors.-->
+            <goBILDA5202SeriesMotor name="motorBR" port="0" />
+            <goBILDA5202SeriesMotor name="motorFR" port="1"/>
+            <goBILDA5202SeriesMotor name="motorFL" port="2"/>
+            <goBILDA5202SeriesMotor name="motorBL" port="3" />
+
+            <!--These are the Control Hub's servos. Change the ports and names of your servos.-->
+            <Servo name="rotate" port="0"/>
+            <Servo name="wrist" port="1"/>
+            <ContinuousRotationServo name="intake" port="2"/>
+
+            <!--This is the built-in Control Hub IMU. Use this if you are using one of the Control Hub IMU localizers.-->
+            <ControlHubImuBHI260AP name="imu" port="0" bus="0"/>
+
+            <!--This line signifies that the Control Hub configuration has ended.-->
+        </LynxModule>
+
+        <!--This line signifies that the Control Hub Portal configuration has ended.-->
+    </LynxUsbDevice>
+
+    <!--This is the configuration for an Ethernet Device, in this case our Limelight3A.-->
+
+    <!--This line signifies that the robot configuration has ended-->
+</Robot>
