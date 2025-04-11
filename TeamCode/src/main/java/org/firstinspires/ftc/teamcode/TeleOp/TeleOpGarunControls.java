@@ -2,7 +2,6 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,9 +15,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-@TeleOp(name="ILT TeleOp", group="Main")
+@TeleOp(name="ILT TeleOp - Garry", group="Main")
 //@Disabled
-public class UpdatedStarterBot2 extends OpMode {
+public class TeleOpGarunControls extends OpMode {
 
     /* Declare OpMode members. */
     DcMotor frontLeftMotor = null;
@@ -55,13 +54,14 @@ public class UpdatedStarterBot2 extends OpMode {
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
     double armPosition = (int) ARM_WINCH_ROBOT;
-    double armPositionFudgeFactor;
 
     Gamepad gamepad1Previous = new Gamepad();
     Gamepad gamepad1Current = new Gamepad();
 
     Gamepad gamepad2Previous = new Gamepad();
     Gamepad gamepad2Current = new Gamepad();
+
+    int armFudgeValue = 0;
 
     final double DRIVE_SPEED = 0.75;
 
@@ -197,26 +197,33 @@ public class UpdatedStarterBot2 extends OpMode {
         frontRightMotor.setPower(frontRightPower * DRIVE_SPEED);
         backRightMotor.setPower(backRightPower * DRIVE_SPEED);
 
-        double increaseArmPositionFudgeFactor = 0;
-        double decreaseArmPositionFudgeFactor = 0;
-
         if (gamepad1Current.y || gamepad1Current.dpad_down) {
-            decreaseArmPositionFudgeFactor = 1;
+            if (armFudgeValue == 0) {
+                armFudgeValue = -15;
+            } else if (armFudgeValue == -15) {
+                armFudgeValue = 0;
+            } else {
+                armFudgeValue = -15;
+            }
         }
 
         if (gamepad1Current.a || gamepad1Current.dpad_up) {
-            increaseArmPositionFudgeFactor = 1;
+            if (armFudgeValue == 0) {
+                armFudgeValue = 15;
+            } else if (armFudgeValue == 15) {
+                armFudgeValue = 0;
+            } else {
+                armFudgeValue = 15;
+            }
         }
 
         if (gamepad2Current.right_trigger > 0.1) {
-            increaseArmPositionFudgeFactor = gamepad2Current.right_trigger;
+            armFudgeValue = (int) gamepad2Current.right_trigger * 15;
         }
 
         if (gamepad2Current.left_trigger > 0.1) {
-            decreaseArmPositionFudgeFactor = gamepad2Current.left_trigger;
+            armFudgeValue = (int) gamepad2Current.left_trigger * 15;
         }
-
-        armPositionFudgeFactor = FUDGE_FACTOR * (increaseArmPositionFudgeFactor + (-decreaseArmPositionFudgeFactor));
 
         //TODO: Fix Controls
         if (gamepad1Current.b && !gamepad1Previous.b){
@@ -315,7 +322,7 @@ public class UpdatedStarterBot2 extends OpMode {
         /* Here we set the target position of our arm to match the variable that was selected
         by the driver.
         We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
-        armMotor.setTargetPosition((int) (armPosition  +armPositionFudgeFactor));
+        armMotor.setTargetPosition((int) (armPosition  + (armFudgeValue * ARM_TICKS_PER_DEGREE)));
 
         ((DcMotorEx) armMotor).setVelocity(1750);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
